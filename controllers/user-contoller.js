@@ -3,7 +3,7 @@ const { User, Thought } = require("../models");
 const userController = {
   getAllUser(req, res) {
     User.find({})
-      .populate({ path: "friends", select: "-__v" })
+      .populate({ path: "friends", select: "_id username email" })
       .select("-__v")
       .sort({ _id: 1 })
       .then((dbUserData) => res.json(dbUserData))
@@ -13,7 +13,7 @@ const userController = {
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
       .populate({ path: "thoughts", select: "-__v" })
-      .populate({ path: "friends", select: "-__v" })
+      .populate({ path: "friends", select: "_id username email" })
       .select("-__v")
       .then((dbUserData) =>
         dbUserData
